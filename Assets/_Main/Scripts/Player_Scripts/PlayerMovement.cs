@@ -8,7 +8,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private GridManager _gridManager;
     [SerializeField] private Transform _unitParent;
 
-    private Vector3 _mouseClickedPos = Vector3.zero;
+    private Vector3 _mouseClickedPos, _playerLastKey;
     private bool _isMovable = true;
 
     private void Update()
@@ -56,7 +56,21 @@ public class PlayerMovement : MonoBehaviour
     private void MovePlayer(Vector3 direction, int distance)
     {
         _isMovable = false;
-        transform.DOMove(transform.position + direction * distance, distance * 0.1f).OnComplete(SetMovable);
+        _playerLastKey = Vector3Int.RoundToInt(transform.position - _unitParent.position);
+        _gridManager.PaintGridUnit(_playerLastKey);
+        transform.DOMove(transform.position + direction * distance, distance * 0.1f)
+            .OnUpdate(PaintGrid)
+            .OnComplete(SetMovable);
+    }
+
+    private void PaintGrid()
+    {
+        Vector3 currentKey = Vector3Int.RoundToInt(transform.position - _unitParent.position);
+        if (_playerLastKey != currentKey)
+        {
+            _playerLastKey = currentKey;
+            _gridManager.PaintGridUnit(_playerLastKey);
+        }
     }
 
     private void SetMovable () => _isMovable = true;

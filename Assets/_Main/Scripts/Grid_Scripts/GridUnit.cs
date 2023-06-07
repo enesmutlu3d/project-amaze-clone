@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using DG.Tweening;
 
 public class GridUnit : MonoBehaviour
 {
@@ -16,7 +17,6 @@ public class GridUnit : MonoBehaviour
 
     public void Colorize()
     {
-        //Test
-        _meshRenderer.material.color = Color.red;
+        _meshRenderer.material.DOColor(Color.red, 0.3f);
     }
 }

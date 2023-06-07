@@ -39,11 +39,11 @@ public class GridManager : MonoBehaviour
         if (direction.x > 0)
             loopAmount = _gridSize.x - currentKey.x;
         else if (direction.x < 0)
-            loopAmount = currentKey.x;
+            loopAmount = currentKey.x + 1;
         else if (direction.z > 0)
             loopAmount = _gridSize.z - currentKey.z;
         else if (direction.z < 0)
-            loopAmount = currentKey.z;
+            loopAmount = currentKey.z + 1;
 
         for (int i = 1; i < loopAmount; i++)
         {

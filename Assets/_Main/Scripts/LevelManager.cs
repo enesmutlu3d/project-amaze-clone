@@ -4,12 +4,12 @@ using UnityEngine;
 
 public class LevelManager : MonoBehaviour
 {
-    void Start()
+    private void Awake()
     {
-        LoadLevel();
+        SingletonCheck();
     }
 
-    private void LoadLevel()
+    public void LoadLevel()
     {
         var loadRequest = Resources.LoadAsync<GameObject>("Levels/Level_1");
         loadRequest.completed += LoadRequest_completed;
@@ -24,5 +24,14 @@ public class LevelManager : MonoBehaviour
     private void UnloadResources()
     {
         Resources.UnloadUnusedAssets();
+    }
+
+    public static LevelManager Instance { get; private set; }
+    private void SingletonCheck()
+    {
+        if (Instance != null && Instance != this)
+            Destroy(this);
+        else
+            Instance = this;
     }
 }

@@ -9,16 +9,15 @@ public class GridManager : MonoBehaviour
     [SerializeField] private Transform _gridUnitParent;
 
     private readonly Dictionary<Vector3, GridUnit> _gridUnits = new Dictionary<Vector3, GridUnit>();
-    private readonly List<Vector3> _gridUnitsToPaint = new List<Vector3>();
     private Vector3 _gridSize;
 
     public void Start()
     {
-        FillDictionary();
+        FillUnitDictionary();
         GetGridSize();
     }
 
-    private void FillDictionary()
+    private void FillUnitDictionary()
     {
         foreach (Transform child in _gridUnitParent)
             _gridUnits.Add(child.localPosition, child.GetComponent<GridUnit>());
@@ -52,7 +51,6 @@ public class GridManager : MonoBehaviour
             if (_gridUnits[nextKey].gridStatus != GridUnit.GridStatus.FloorEmpty)
                 break;
             movableGridAmount++;
-            _gridUnitsToPaint.Add(nextKey);
         }
 
         return movableGridAmount;

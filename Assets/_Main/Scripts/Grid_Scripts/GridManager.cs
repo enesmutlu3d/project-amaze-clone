@@ -10,17 +10,25 @@ public class GridManager : MonoBehaviour
 
     private readonly Dictionary<Vector3, GridUnit> _gridUnits = new Dictionary<Vector3, GridUnit>();
     private Vector3 _gridSize;
+    private Level _level;
 
     public void Start()
     {
+        _level = GetComponentInParent<Level>();
         FillUnitDictionary();
         GetGridSize();
     }
 
     private void FillUnitDictionary()
     {
+        int emptyFloorAmount = 0;
         foreach (Transform child in _gridUnitParent)
+        {
             _gridUnits.Add(child.localPosition, child.GetComponent<GridUnit>());
+            if (child.GetComponent<GridUnit>().gridStatus == GridUnit.GridStatus.FloorEmpty)
+                emptyFloorAmount++;
+        }
+        _level.floorGridAmount = emptyFloorAmount;
     }
 
     private void GetGridSize()
@@ -48,7 +56,7 @@ public class GridManager : MonoBehaviour
         for (int i = 1; i < loopAmount; i++)
         {
             Vector3 nextKey = currentKey + direction * i;
-            if (_gridUnits[nextKey].gridStatus != GridUnit.GridStatus.FloorEmpty)
+            if (_gridUnits[nextKey].gridStatus == GridUnit.GridStatus.Wall)
                 break;
             movableGridAmount++;
         }
@@ -56,5 +64,9 @@ public class GridManager : MonoBehaviour
         return movableGridAmount;
     }
 
-    public void PaintGridUnit(Vector3 key) => _gridUnits[key].Colorize();
+    public void PaintGridUnit(Vector3 key)
+    {
+        _level.paintedGridAmount++;
+        _gridUnits[key].Colorize();
+    }
 }

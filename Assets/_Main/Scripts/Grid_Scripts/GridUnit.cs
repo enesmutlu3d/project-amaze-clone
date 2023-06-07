@@ -14,9 +14,18 @@ public class GridUnit : MonoBehaviour
     public GridStatus gridStatus;
 
     [SerializeField] private MeshRenderer _meshRenderer;
+    private Level _level;
+    private Material _floorColoredMaterial;
+
+    private void Start()
+    {
+        _level = GetComponentInParent<Level>();
+        _floorColoredMaterial = _level.floorGridMaterial;
+    }
 
     public void Colorize()
     {
-        _meshRenderer.material.DOColor(Color.red, 0.3f);
+        gridStatus = GridStatus.FloorColored;
+        _meshRenderer.material = _floorColoredMaterial;
     }
 }

@@ -1,0 +1,3 @@
+- Input: Hareket swipe ile sağlanmaya devam edecek fakat oyuncu parmağını kaldırmadan oynamaya devam edebilecek.
+- Topun Hareketi Görsel Geri Bildirimi: Top hareket ederken devamlı spawn edilen particle kaldırılacak. Zemin boyaması bir anda olmayacak, bunun yerine içerden dışarı doğru renk değişimi gerçekleşecek.
+- UI: Level Progress Bar eklenecek. Level geçildiğinde Progress Bar'daki level sayıları büyüyüp küçülecek.

@@ -52,9 +52,9 @@ public class PlayerInput : MonoBehaviour
         else
         {
             if (mousePosDelta.y > 0)
-                return Vector3.forward;
+                return Vector3.up;
             else
-                return Vector3.back;
+                return Vector3.down;
         }
     }
 }

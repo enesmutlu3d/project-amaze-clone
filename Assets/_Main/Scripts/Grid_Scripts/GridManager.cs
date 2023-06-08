@@ -34,9 +34,9 @@ public class GridManager : MonoBehaviour
     private void GetGridSize()
     {
         List<Vector3> temp = new List<Vector3>(_gridUnits.Keys);
-        Vector3 minPoint = temp.Aggregate((p1, p2) => new Vector3(Math.Min(p1.x, p2.x), 0, Math.Min(p1.z, p2.z)));
-        Vector3 maxPoint = temp.Aggregate((p1, p2) => new Vector3(Math.Max(p1.x, p2.x), 0, Math.Max(p1.z, p2.z)));
-        _gridSize = new Vector3(maxPoint.x - minPoint.x + 1, 0, maxPoint.z - minPoint.z + 1);
+        Vector3 minPoint = temp.Aggregate((p1, p2) => new Vector3(Math.Min(p1.x, p2.x), Math.Min(p1.y, p2.y), 0));
+        Vector3 maxPoint = temp.Aggregate((p1, p2) => new Vector3(Math.Max(p1.x, p2.x), Math.Max(p1.y, p2.y), 0));
+        _gridSize = new Vector3(maxPoint.x - minPoint.x + 1, maxPoint.y - minPoint.y + 1, 0);
     }
 
     public int CheckMove(Vector3 currentKey, Vector3 direction)
@@ -48,10 +48,10 @@ public class GridManager : MonoBehaviour
             loopAmount = _gridSize.x - currentKey.x;
         else if (direction.x < 0)
             loopAmount = currentKey.x + 1;
-        else if (direction.z > 0)
-            loopAmount = _gridSize.z - currentKey.z;
-        else if (direction.z < 0)
-            loopAmount = currentKey.z + 1;
+        else if (direction.y > 0)
+            loopAmount = _gridSize.y - currentKey.y;
+        else if (direction.y < 0)
+            loopAmount = currentKey.y + 1;
 
         for (int i = 1; i < loopAmount; i++)
         {

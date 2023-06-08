@@ -1,3 +1,4 @@
+using DG.Tweening;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -5,45 +6,62 @@ using UnityEngine;
 
 public class LevelManager : MonoBehaviour
 {
+    public static event Action LevelComlete;
+    public static event Action LevelStart;
+
+    private GameObject _loadedLevel;
+
     private void Awake()
     {
         SingletonCheck();
-        CheckLevelProgess();
-        LoadLevel();
+        CheckFirstLevel();
+        StartAsyncLoading();
     }
 
-    public void NextLevel()
+    public void LevelCompleted()
     {
         int level = PlayerPrefs.GetInt("LevelProgress");
         PlayerPrefs.SetInt("LevelProgress", level + 1);
-        LoadLevel();
+        StartAsyncLoading();
+        LevelComlete?.Invoke();
     }
 
-    private void LoadLevel()
+    private void StartAsyncLoading()
     {
         int level = PlayerPrefs.GetInt("LevelProgress");
         var loadRequest = Resources.LoadAsync<GameObject>("Levels/Level_" + level);
-        loadRequest.completed += LoadRequest_completed;
+        loadRequest.completed += AsyncLoadCompleted;
     }
 
-    private void LoadRequest_completed(AsyncOperation obj)
+    private void AsyncLoadCompleted(AsyncOperation obj)
     {
         ResourceRequest resourceRequest = (ResourceRequest)obj;
-        Instantiate(resourceRequest.asset);
+
+        GameObject oldLevel = null;
+        if (_loadedLevel != null)
+            oldLevel = _loadedLevel;
+        _loadedLevel = (GameObject)Instantiate(resourceRequest.asset);
+        LevelLoadAnimation(_loadedLevel, oldLevel);
     }
 
-    private void UnloadResources()
+    private void LevelLoadAnimation(GameObject newLevel, GameObject oldLevel)
     {
-        Resources.UnloadUnusedAssets();
+        if (oldLevel != null)
+            oldLevel.transform.DOMove(Vector2.right * -15f, 0.75f).OnComplete(() => { Destroy(oldLevel); UnloadResources(); });
+
+        newLevel.transform.position = Vector2.right * 15f;
+        newLevel.transform.DOMove(Vector2.zero, 0.8f).OnComplete(() => LevelStart?.Invoke());
     }
 
-    private void CheckLevelProgess()
+    private void CheckFirstLevel()
     {
         if (!PlayerPrefs.HasKey("LevelProgress"))
         {
             PlayerPrefs.SetInt("LevelProgress", 1);
         }
     }
+
+    private void UnloadResources() => Resources.UnloadUnusedAssets();
 
     public static LevelManager Instance { get; private set; }
     private void SingletonCheck()

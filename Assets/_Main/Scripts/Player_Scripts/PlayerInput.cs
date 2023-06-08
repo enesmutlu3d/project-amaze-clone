@@ -7,7 +7,7 @@ public class PlayerInput : MonoBehaviour
     [SerializeField] private GridManager _gridManager;
     [SerializeField] private Transform _unitParent;
 
-    [HideInInspector] public bool isMovable = true;
+    [HideInInspector] public bool isMovable = false;
     private PlayerMovement playerMovement;
     private Vector3 _mouseClickedPos;
 
@@ -56,5 +56,21 @@ public class PlayerInput : MonoBehaviour
             else
                 return Vector2.down;
         }
+    }
+
+    private void OnLevelComplete() => isMovable = false;
+
+    private void OnLevelStart() => isMovable = true;
+
+    private void OnEnable()
+    {
+        LevelManager.LevelComlete += OnLevelComplete;
+        LevelManager.LevelStart += OnLevelStart;
+    }
+
+    private void OnDisable()
+    {
+        LevelManager.LevelComlete -= OnLevelComplete;
+        LevelManager.LevelStart -= OnLevelStart;
     }
 }

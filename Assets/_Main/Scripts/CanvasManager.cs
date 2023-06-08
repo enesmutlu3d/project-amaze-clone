@@ -15,7 +15,15 @@ public class CanvasManager : MonoBehaviour
         SingletonCheck();    
     }
 
-    public void LevelEndProgressBarAnimation()
+    public void OnLevelStart()
+    {
+        _progressBarFill.fillAmount = 0;
+        int level = PlayerPrefs.GetInt("LevelProgress");
+        _currentLevelText.text = level.ToString();
+        _nextLevelText.text = (level + 1).ToString();
+    }
+
+    public void OnLevelComplete()
     {
         _currentLevelText.transform.DOScale(1.5f, 0.25f).SetLoops(2, LoopType.Yoyo);
         _nextLevelText.transform.DOScale(1.5f, 0.25f).SetLoops(2, LoopType.Yoyo);
@@ -30,5 +38,17 @@ public class CanvasManager : MonoBehaviour
             Destroy(this);
         else
             Instance = this;
+    }
+
+    private void OnEnable()
+    {
+        LevelManager.LevelComlete += OnLevelComplete;
+        LevelManager.LevelStart += OnLevelStart;
+    }
+
+    private void OnDisable()
+    {
+        LevelManager.LevelComlete -= OnLevelComplete;
+        LevelManager.LevelStart -= OnLevelStart;
     }
 }

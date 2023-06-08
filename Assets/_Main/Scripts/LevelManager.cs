@@ -6,13 +6,16 @@ using UnityEngine;
 
 public class LevelManager : MonoBehaviour
 {
+    [SerializeField] private float _camTransitionFarSize, _camDefaultSize;
     public static event Action LevelComlete;
     public static event Action LevelStart;
 
     private GameObject _loadedLevel;
+    private Camera _camera;
 
     private void Awake()
     {
+        _camera = Camera.main;
         SingletonCheck();
         CheckFirstLevel();
         StartAsyncLoading();
@@ -47,7 +50,11 @@ public class LevelManager : MonoBehaviour
     private void LevelLoadAnimation(GameObject newLevel, GameObject oldLevel)
     {
         if (oldLevel != null)
+        {
             oldLevel.transform.DOMove(Vector2.right * -15f, 0.75f).OnComplete(() => { Destroy(oldLevel); UnloadResources(); });
+            _camera.DOOrthoSize(_camTransitionFarSize, 0.35f)
+                .OnComplete(() => _camera.DOOrthoSize(_camDefaultSize, 0.35f));
+        }
 
         newLevel.transform.position = Vector2.right * 15f;
         newLevel.transform.DOMove(Vector2.zero, 0.8f).OnComplete(() => LevelStart?.Invoke());

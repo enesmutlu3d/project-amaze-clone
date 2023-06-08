@@ -12,7 +12,7 @@ public class GridManager : MonoBehaviour
     private Vector2 _gridSize;
     private Level _level;
 
-    public void Start()
+    public void OnLevelStart()
     {
         _level = GetComponentInParent<Level>();
         FillUnitDictionary();
@@ -73,5 +73,15 @@ public class GridManager : MonoBehaviour
             _level.CheckLevelProgress();
             _gridUnits[key].Colorize();
         }
+    }
+
+    private void OnEnable()
+    {
+        LevelManager.LevelStart += OnLevelStart;
+    }
+
+    private void OnDisable()
+    {
+        LevelManager.LevelStart -= OnLevelStart;
     }
 }

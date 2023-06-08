@@ -19,6 +19,5 @@ public class Level : MonoBehaviour
 
         if (paintedGridAmount == floorGridAmount)
             DOVirtual.DelayedCall(0.2f, () => LevelManager.Instance.LevelCompleted());
-        //LevelManager.Instance.LevelCompleted();
     }
 }

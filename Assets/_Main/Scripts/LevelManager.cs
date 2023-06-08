@@ -7,6 +7,7 @@ using UnityEngine;
 public class LevelManager : MonoBehaviour
 {
     [SerializeField] private float _camTransitionFarSize, _camDefaultSize;
+    [SerializeField] private int _lastLevelIndex;
     public static event Action LevelComlete;
     public static event Action LevelStart;
 
@@ -25,6 +26,8 @@ public class LevelManager : MonoBehaviour
     {
         int level = PlayerPrefs.GetInt("LevelProgress");
         PlayerPrefs.SetInt("LevelProgress", level + 1);
+        if (level == _lastLevelIndex)
+            PlayerPrefs.SetInt("LevelProgress", 1);
         StartAsyncLoading();
         LevelComlete?.Invoke();
     }

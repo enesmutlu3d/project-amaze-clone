@@ -37,4 +37,20 @@ public class PlayerMovement : MonoBehaviour
     }
 
     private void SetMovable () => _playerInput.isMovable = true;
+
+    private void OnLevelComplete()
+    {
+        enabled = false;
+        DOTween.Kill(transform);
+    }
+
+    private void OnEnable()
+    {
+        LevelManager.LevelComlete += OnLevelComplete;
+    }
+
+    private void OnDisable()
+    {
+        LevelManager.LevelComlete -= OnLevelComplete;
+    }
 }

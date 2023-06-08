@@ -11,6 +11,7 @@ public class PlayerInput : MonoBehaviour
     [HideInInspector] public bool isMovable = false;
     private PlayerMovement playerMovement;
     private Vector3 _mouseClickedPos;
+    private bool _isClicked = false;
 
     private void Start()
     {
@@ -25,20 +26,31 @@ public class PlayerInput : MonoBehaviour
         if (Input.GetMouseButtonDown(0))
         {
             _mouseClickedPos = Input.mousePosition;
+            _isClicked = true;
         }
 
         else if (Input.GetMouseButton(0))
         {
+            if (!_isClicked)
+                return;
+
             Vector3 mousePosDelta = Input.mousePosition - _mouseClickedPos;
 
             if (mousePosDelta.magnitude > 100)
             {
+                _isClicked = false;
                 Vector2 direction = CheckInputDirection(mousePosDelta);
                 int moveAmount = _gridManager.CheckMove((Vector2)transform.position - (Vector2)_unitParent.position, direction);
                 if (moveAmount > 0)
                     playerMovement.MovePlayer(direction, moveAmount);
             }
         }
+
+        else if (Input.GetMouseButtonUp(0))
+        {
+            _isClicked = false;
+        }
+
     }
 
     private Vector2 CheckInputDirection(Vector2 mousePosDelta)
@@ -59,7 +71,11 @@ public class PlayerInput : MonoBehaviour
         }
     }
 
-    private void OnLevelComplete() => isMovable = false;
+    private void OnLevelComplete()
+    {
+        isMovable = false;
+        enabled = false;
+    }
 
     private void OnLevelStart() => DOVirtual.DelayedCall(0.1f, () => isMovable = true);
 

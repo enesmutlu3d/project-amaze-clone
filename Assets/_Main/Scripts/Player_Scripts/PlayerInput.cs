@@ -32,29 +32,29 @@ public class PlayerInput : MonoBehaviour
 
             if (mousePosDelta.magnitude > 100)
             {
-                Vector3 direction = CheckInputDirection(mousePosDelta);
-                int moveAmount = _gridManager.CheckMove(transform.position - _unitParent.position, direction);
+                Vector2 direction = CheckInputDirection(mousePosDelta);
+                int moveAmount = _gridManager.CheckMove((Vector2)transform.position - (Vector2)_unitParent.position, direction);
                 if (moveAmount > 0)
                     playerMovement.MovePlayer(direction, moveAmount);
             }
         }
     }
 
-    private Vector3 CheckInputDirection(Vector3 mousePosDelta)
+    private Vector2 CheckInputDirection(Vector2 mousePosDelta)
     {
         if (Mathf.Abs(mousePosDelta.x) > Mathf.Abs(mousePosDelta.y))
         {
             if (mousePosDelta.x > 0)
-                return Vector3.right;
+                return Vector2.right;
             else
-                return Vector3.left;
+                return Vector2.left;
         }
         else
         {
             if (mousePosDelta.y > 0)
-                return Vector3.up;
+                return Vector2.up;
             else
-                return Vector3.down;
+                return Vector2.down;
         }
     }
 }

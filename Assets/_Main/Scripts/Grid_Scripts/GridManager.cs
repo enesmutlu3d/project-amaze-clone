@@ -8,8 +8,8 @@ public class GridManager : MonoBehaviour
 {
     [SerializeField] private Transform _gridUnitParent;
 
-    private readonly Dictionary<Vector3, GridUnit> _gridUnits = new Dictionary<Vector3, GridUnit>();
-    private Vector3 _gridSize;
+    private readonly Dictionary<Vector2, GridUnit> _gridUnits = new Dictionary<Vector2, GridUnit>();
+    private Vector2 _gridSize;
     private Level _level;
 
     public void Start()
@@ -24,7 +24,8 @@ public class GridManager : MonoBehaviour
         int emptyFloorAmount = 0;
         foreach (Transform child in _gridUnitParent)
         {
-            _gridUnits.Add(child.localPosition, child.GetComponent<GridUnit>());
+            Vector2 key = new Vector2((int)child.localPosition.x, (int)child.localPosition.y);
+            _gridUnits.Add(key, child.GetComponent<GridUnit>());
             if (child.GetComponent<GridUnit>().gridStatus == GridUnit.GridStatus.FloorEmpty)
                 emptyFloorAmount++;
         }
@@ -33,13 +34,13 @@ public class GridManager : MonoBehaviour
 
     private void GetGridSize()
     {
-        List<Vector3> temp = new List<Vector3>(_gridUnits.Keys);
-        Vector3 minPoint = temp.Aggregate((p1, p2) => new Vector3(Math.Min(p1.x, p2.x), Math.Min(p1.y, p2.y), 0));
-        Vector3 maxPoint = temp.Aggregate((p1, p2) => new Vector3(Math.Max(p1.x, p2.x), Math.Max(p1.y, p2.y), 0));
-        _gridSize = new Vector3(maxPoint.x - minPoint.x + 1, maxPoint.y - minPoint.y + 1, 0);
+        List<Vector2> temp = new List<Vector2>(_gridUnits.Keys);
+        Vector2 minPoint = temp.Aggregate((p1, p2) => new Vector2(Math.Min(p1.x, p2.x), Math.Min(p1.y, p2.y)));
+        Vector2 maxPoint = temp.Aggregate((p1, p2) => new Vector2(Math.Max(p1.x, p2.x), Math.Max(p1.y, p2.y)));
+        _gridSize = new Vector2(maxPoint.x - minPoint.x + 1, maxPoint.y - minPoint.y + 1);
     }
 
-    public int CheckMove(Vector3 currentKey, Vector3 direction)
+    public int CheckMove(Vector2 currentKey, Vector2 direction)
     {
         int movableGridAmount = 0;
         float loopAmount = 0;
@@ -55,7 +56,7 @@ public class GridManager : MonoBehaviour
 
         for (int i = 1; i < loopAmount; i++)
         {
-            Vector3 nextKey = currentKey + direction * i;
+            Vector2 nextKey = currentKey + direction * i;
             if (_gridUnits[nextKey].gridStatus == GridUnit.GridStatus.Wall)
                 break;
             movableGridAmount++;
@@ -64,7 +65,7 @@ public class GridManager : MonoBehaviour
         return movableGridAmount;
     }
 
-    public void PaintGridUnit(Vector3 key)
+    public void PaintGridUnit(Vector2 key)
     {
         if (_gridUnits[key].gridStatus != GridUnit.GridStatus.FloorColored)
         {

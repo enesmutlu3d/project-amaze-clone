@@ -21,7 +21,7 @@ public class PlayerMovement : MonoBehaviour
         _playerInput.isMovable = false;
         _playerLastKey = Vector3Int.RoundToInt(transform.position - _unitParent.position);
         _gridManager.PaintGridUnit(_playerLastKey);
-        transform.DOMove(transform.position + direction * distance, distance * 0.1f)
+        transform.DOMove(transform.position + direction * distance, distance * 0.05f)
             .OnUpdate(PaintGrid)
             .OnComplete(SetMovable);
     }

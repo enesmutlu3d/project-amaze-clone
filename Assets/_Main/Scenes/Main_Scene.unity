@@ -1037,8 +1037,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d6f80b7b0e4717a4fb41eeb44853b36f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  levelIndex: 0
   ballMaterial: {fileID: 2100000, guid: 90dce6c60aee16e41a9ba3cc8ede7fb6, type: 2}
-  floorGridMaterial: {fileID: 2100000, guid: b35aad4a48e708842abf35d7638da740, type: 2}
+  floorGridMaterial: {fileID: 2100000, guid: 13293aba5bbaea146903bb709caed5b2, type: 2}
+  floorPaintedMaterial: {fileID: 2100000, guid: b35aad4a48e708842abf35d7638da740,
+    type: 2}
   floorGridAmount: 0
   paintedGridAmount: 0
 --- !u!4 &550840186 stripped
@@ -3756,6 +3759,16 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 511363944}
     m_Modifications:
+    - target: {fileID: 5850289166591084185, guid: aa991543ad7a74a46bae1682eef4493b,
+        type: 3}
+      propertyPath: _unitParent
+      value: 
+      objectReference: {fileID: 456379824}
+    - target: {fileID: 5850289166591084185, guid: aa991543ad7a74a46bae1682eef4493b,
+        type: 3}
+      propertyPath: _gridManager
+      value: 
+      objectReference: {fileID: 1558262087}
     - target: {fileID: 5850289166591084188, guid: aa991543ad7a74a46bae1682eef4493b,
         type: 3}
       propertyPath: m_RootOrder

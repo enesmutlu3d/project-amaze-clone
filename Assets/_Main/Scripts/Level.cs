@@ -5,7 +5,7 @@ using UnityEngine;
 public class Level : MonoBehaviour
 {
     public int levelIndex;
-    public Material ballMaterial, floorGridMaterial;
+    public Material ballMaterial, floorGridMaterial, floorPaintedMaterial;
     [HideInInspector] public int floorGridAmount;
     [HideInInspector] public int paintedGridAmount;
 

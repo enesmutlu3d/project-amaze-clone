@@ -15,17 +15,17 @@ public class GridUnit : MonoBehaviour
 
     [SerializeField] private MeshRenderer _meshRenderer;
     private Level _level;
-    private Material _floorColoredMaterial;
 
     private void Start()
     {
         _level = GetComponentInParent<Level>();
-        _floorColoredMaterial = _level.floorGridMaterial;
+        if (gridStatus == GridStatus.FloorEmpty)
+            _meshRenderer.sharedMaterial = _level.floorGridMaterial;
     }
 
     public void Colorize()
     {
         gridStatus = GridStatus.FloorColored;
-        _meshRenderer.material = _floorColoredMaterial;
+        _meshRenderer.sharedMaterial = _level.floorPaintedMaterial;
     }
 }

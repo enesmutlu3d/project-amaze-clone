@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
+using UnityEditor;
 
 public class GridUnit : MonoBehaviour
 {
@@ -19,13 +20,13 @@ public class GridUnit : MonoBehaviour
     private void Start()
     {
         _level = GetComponentInParent<Level>();
-        if (gridStatus == GridStatus.FloorEmpty)
-            _meshRenderer.sharedMaterial = _level.floorGridMaterial;
     }
 
     public void Colorize()
     {
         gridStatus = GridStatus.FloorColored;
-        _meshRenderer.sharedMaterial = _level.floorPaintedMaterial;
+        Material[] materials = _meshRenderer.sharedMaterials;
+        materials[1] = _level.floorPaintedMaterial;
+        _meshRenderer.sharedMaterials = materials;
     }
 }

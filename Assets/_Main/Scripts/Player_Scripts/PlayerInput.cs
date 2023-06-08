@@ -7,6 +7,7 @@ public class PlayerInput : MonoBehaviour
 {
     [SerializeField] private GridManager _gridManager;
     [SerializeField] private Transform _unitParent;
+    [SerializeField] private float _swipeThreshold;
 
     [HideInInspector] public bool isMovable = false;
     private PlayerMovement playerMovement;
@@ -36,22 +37,19 @@ public class PlayerInput : MonoBehaviour
 
             Vector3 mousePosDelta = Input.mousePosition - _mouseClickedPos;
 
-            if (mousePosDelta.magnitude > 100)
+            if (mousePosDelta.magnitude > _swipeThreshold)
             {
-                _isClicked = false;
                 Vector2 direction = CheckInputDirection(mousePosDelta);
                 int moveAmount = _gridManager.CheckMove((Vector2)transform.position - (Vector2)_unitParent.position, direction);
                 if (moveAmount > 0)
                     playerMovement.MovePlayer(direction, moveAmount);
+                else
+                    ResetSwipeThreshold();
             }
         }
-
-        else if (Input.GetMouseButtonUp(0))
-        {
-            _isClicked = false;
-        }
-
     }
+
+    public void ResetSwipeThreshold() => _mouseClickedPos = Input.mousePosition;
 
     private Vector2 CheckInputDirection(Vector2 mousePosDelta)
     {

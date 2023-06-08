@@ -36,7 +36,11 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
-    private void SetMovable () => _playerInput.isMovable = true;
+    private void SetMovable()
+    {
+        _playerInput.isMovable = true;
+        _playerInput.ResetSwipeThreshold();
+    }
 
     private void OnLevelComplete()
     {

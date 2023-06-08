@@ -6,17 +6,16 @@ using UnityEngine;
 
 public class LevelManager : MonoBehaviour
 {
-    [SerializeField] private float _camTransitionFarSize, _camDefaultSize;
-    [SerializeField] private int _lastLevelIndex;
+    [SerializeField] private int _maxLevelIndex;
     public static event Action LevelComlete;
     public static event Action LevelStart;
+    private LevelAnimations _levelAnimations;
 
     private GameObject _loadedLevel;
-    private Camera _camera;
 
     private void Awake()
     {
-        _camera = Camera.main;
+        _levelAnimations = GetComponent<LevelAnimations>();
         SingletonCheck();
         CheckFirstLevel();
         StartAsyncLoading();
@@ -26,7 +25,7 @@ public class LevelManager : MonoBehaviour
     {
         int level = PlayerPrefs.GetInt("LevelProgress");
         PlayerPrefs.SetInt("LevelProgress", level + 1);
-        if (level == _lastLevelIndex)
+        if (level == _maxLevelIndex)
             PlayerPrefs.SetInt("LevelProgress", 1);
         StartAsyncLoading();
         LevelComlete?.Invoke();
@@ -45,22 +44,18 @@ public class LevelManager : MonoBehaviour
 
         GameObject oldLevel = null;
         if (_loadedLevel != null)
+        {
             oldLevel = _loadedLevel;
-        _loadedLevel = (GameObject)Instantiate(resourceRequest.asset);
-        LevelLoadAnimation(_loadedLevel, oldLevel);
+            _levelAnimations.PlayLevelCompleteParticle();
+        }
+        _loadedLevel = (GameObject)Instantiate(resourceRequest.asset, Vector3.right * 15f, Quaternion.identity);
+        DOVirtual.DelayedCall(0.7f, () => _levelAnimations.LevelLoadAnimation(_loadedLevel, oldLevel));
     }
 
-    private void LevelLoadAnimation(GameObject newLevel, GameObject oldLevel)
+    public void StartNewLevel()
     {
-        if (oldLevel != null)
-        {
-            oldLevel.transform.DOMove(Vector2.right * -15f, 0.75f).OnComplete(() => { Destroy(oldLevel); UnloadResources(); });
-            _camera.DOOrthoSize(_camTransitionFarSize, 0.35f)
-                .OnComplete(() => _camera.DOOrthoSize(_camDefaultSize, 0.35f));
-        }
-
-        newLevel.transform.position = Vector2.right * 15f;
-        newLevel.transform.DOMove(Vector2.zero, 0.8f).OnComplete(() => LevelStart?.Invoke());
+        LevelStart?.Invoke();
+        UnloadResources();
     }
 
     private void CheckFirstLevel()

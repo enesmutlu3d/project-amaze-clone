@@ -26,7 +26,7 @@ public class CanvasManager : MonoBehaviour
 
     public void OnLevelComplete()
     {
-        _progressBar.transform.DOScale(1.35f, 0.3f).SetLoops(2, LoopType.Yoyo);
+        _progressBar.transform.DOScale(1.25f, 0.3f).SetLoops(2, LoopType.Yoyo).SetDelay(0.35f);
     }
 
     public void UpdateProgressBar(float percent) => _progressBarFill.fillAmount = percent;

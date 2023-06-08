@@ -11,7 +11,7 @@ public class Level : MonoBehaviour
 
     private float _levelProgress;
 
-    private void Start()
+    public void OnLevelStart()
     {
         CanvasManager.Instance.UpdateProgressBar(0);
     }
@@ -29,6 +29,6 @@ public class Level : MonoBehaviour
 
     private void EndLevel()
     {
-        LevelManager.Instance.LoadLevel();
+        LevelManager.Instance.NextLevel();
     }
 }

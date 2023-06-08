@@ -11,11 +11,20 @@ public class Level : MonoBehaviour
 
     private float _levelProgress;
 
+    private void Start()
+    {
+        CanvasManager.Instance.UpdateProgressBar(0);
+    }
+
     public void CheckLevelProgress()
     {
-        _levelProgress = floorGridAmount / paintedGridAmount;
+        _levelProgress = (float)paintedGridAmount / (float)floorGridAmount;
+        CanvasManager.Instance.UpdateProgressBar(_levelProgress);
         if (paintedGridAmount == floorGridAmount)
+        {
+            CanvasManager.Instance.LevelEndProgressBarAnimation();
             EndLevel();
+        }
     }
 
     private void EndLevel()

@@ -11,8 +11,9 @@ public class LevelManager : MonoBehaviour
 
     public void LoadLevel()
     {
-        var loadRequest = Resources.LoadAsync<GameObject>("Levels/Level_1");
-        loadRequest.completed += LoadRequest_completed;
+        Debug.Log("Load Level");
+        /*var loadRequest = Resources.LoadAsync<GameObject>("Levels/Level_1");
+        loadRequest.completed += LoadRequest_completed;*/
     }
 
     private void LoadRequest_completed(AsyncOperation obj)

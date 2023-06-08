@@ -66,7 +66,11 @@ public class GridManager : MonoBehaviour
 
     public void PaintGridUnit(Vector3 key)
     {
-        _level.paintedGridAmount++;
-        _gridUnits[key].Colorize();
+        if (_gridUnits[key].gridStatus != GridUnit.GridStatus.FloorColored)
+        {
+            _level.paintedGridAmount++;
+            _level.CheckLevelProgress();
+            _gridUnits[key].Colorize();
+        }
     }
 }

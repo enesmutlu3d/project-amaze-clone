@@ -7,6 +7,7 @@ using UnityEngine.UI;
 
 public class CanvasManager : MonoBehaviour
 {
+    [SerializeField]  private GameObject _progressBar;
     [SerializeField] private Image _progressBarFill;
     [SerializeField] private TextMeshProUGUI _currentLevelText, _nextLevelText;
 
@@ -25,8 +26,7 @@ public class CanvasManager : MonoBehaviour
 
     public void OnLevelComplete()
     {
-        _currentLevelText.transform.DOScale(1.5f, 0.25f).SetLoops(2, LoopType.Yoyo);
-        _nextLevelText.transform.DOScale(1.5f, 0.25f).SetLoops(2, LoopType.Yoyo);
+        _progressBar.transform.DOScale(1.35f, 0.3f).SetLoops(2, LoopType.Yoyo);
     }
 
     public void UpdateProgressBar(float percent) => _progressBarFill.fillAmount = percent;

@@ -488,6 +488,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a8698a7b7ff237b45a9ef402436699bd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _progressBar: {fileID: 6664106017842070942}
   _progressBarFill: {fileID: 6664106018395485421}
   _currentLevelText: {fileID: 6664106019679940516}
   _nextLevelText: {fileID: 6664106019542104804}

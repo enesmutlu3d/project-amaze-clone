@@ -80,9 +80,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ballMaterial: {fileID: 2100000, guid: 90dce6c60aee16e41a9ba3cc8ede7fb6, type: 2}
-  floorGridMaterial: {fileID: 2100000, guid: 13293aba5bbaea146903bb709caed5b2, type: 2}
   floorPaintedMaterial: {fileID: 2100000, guid: b35aad4a48e708842abf35d7638da740,
     type: 2}
+  floorPaintEffectColor: {r: 0.990566, g: 0.2943663, b: 0.2943663, a: 1}
   floorGridAmount: 0
   paintedGridAmount: 0
 --- !u!1 &8720418191142797497

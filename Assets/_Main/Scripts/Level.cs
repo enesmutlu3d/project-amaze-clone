@@ -7,6 +7,7 @@ using DG.Tweening;
 public class Level : MonoBehaviour
 {
     public Material ballMaterial, floorPaintedMaterial;
+    public Color floorPaintEffectColor;
     [HideInInspector] public int floorGridAmount;
     [HideInInspector] public int paintedGridAmount;
 

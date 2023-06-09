@@ -9,19 +9,22 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private Transform _unitParent;
 
     private PlayerInput _playerInput;
+    private PlayerVisual _playerVisual;
     private Vector2 _playerLastKey;
 
     private void Start()
     {
         _playerInput = GetComponent<PlayerInput>();
+        _playerVisual = GetComponent<PlayerVisual>();
     }
 
     public void MovePlayer(Vector3 direction, int distance)
     {
+        _playerVisual.OnMovement(direction, distance);
         _playerInput.isMovable = false;
         _playerLastKey = Vector2Int.RoundToInt((Vector2)transform.position - (Vector2)_unitParent.position);
         _gridManager.PaintGridUnit(_playerLastKey);
-        transform.DOMove(transform.position + direction * distance, distance * 0.05f)
+        transform.DOMove(transform.position + direction * distance, distance * 0.05f).SetEase(Ease.InQuad)
             .OnUpdate(PaintGrid)
             .OnComplete(SetMovable);
     }

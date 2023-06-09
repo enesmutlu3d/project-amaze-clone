@@ -179,7 +179,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _gridManager: {fileID: 0}
   _unitParent: {fileID: 0}
-  _swipeThreshold: 150
+  _swipeThreshold: 120
   isMovable: 1
 --- !u!114 &5850289166591084190
 MonoBehaviour:

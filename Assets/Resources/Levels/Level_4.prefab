@@ -2516,6 +2516,31 @@ PrefabInstance:
       propertyPath: m_Name
       value: Level_4
       objectReference: {fileID: 0}
+    - target: {fileID: 8720418189984447918, guid: d1b81fb1b2086cf48a706a0fe882fb2d,
+        type: 3}
+      propertyPath: ballMaterial
+      value: 
+      objectReference: {fileID: 2100000, guid: 068a9883a484ef14f8cff9f0333eb89d, type: 2}
+    - target: {fileID: 8720418189984447918, guid: d1b81fb1b2086cf48a706a0fe882fb2d,
+        type: 3}
+      propertyPath: floorPaintedMaterial
+      value: 
+      objectReference: {fileID: 2100000, guid: b2669d919075c5b4b970ce2bc4bcacc3, type: 2}
+    - target: {fileID: 8720418189984447918, guid: d1b81fb1b2086cf48a706a0fe882fb2d,
+        type: 3}
+      propertyPath: floorPaintEffectColor.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8720418189984447918, guid: d1b81fb1b2086cf48a706a0fe882fb2d,
+        type: 3}
+      propertyPath: floorPaintEffectColor.g
+      value: 0.1462264
+      objectReference: {fileID: 0}
+    - target: {fileID: 8720418189984447918, guid: d1b81fb1b2086cf48a706a0fe882fb2d,
+        type: 3}
+      propertyPath: floorPaintEffectColor.r
+      value: 0.8191055
+      objectReference: {fileID: 0}
     - target: {fileID: 8720418189984447919, guid: d1b81fb1b2086cf48a706a0fe882fb2d,
         type: 3}
       propertyPath: m_RootOrder

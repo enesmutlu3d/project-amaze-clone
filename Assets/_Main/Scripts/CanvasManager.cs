@@ -7,7 +7,7 @@ using UnityEngine.UI;
 
 public class CanvasManager : MonoBehaviour
 {
-    [SerializeField]  private GameObject _progressBar;
+    [SerializeField] private GameObject _progressBar;
     [SerializeField] private Image _progressBarFill;
     [SerializeField] private TextMeshProUGUI _currentLevelText, _nextLevelText;
 

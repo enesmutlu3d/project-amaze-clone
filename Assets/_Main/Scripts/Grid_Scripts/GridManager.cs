@@ -12,7 +12,7 @@ public class GridManager : MonoBehaviour
     private Vector2 _gridSize;
     private Level _level;
 
-    public void OnLevelStart()
+    private void OnLevelStart()
     {
         _level = GetComponentInParent<Level>();
         FillUnitDictionary();
@@ -40,21 +40,11 @@ public class GridManager : MonoBehaviour
         _gridSize = new Vector2(maxPoint.x - minPoint.x + 1, maxPoint.y - minPoint.y + 1);
     }
 
-    public int CheckMove(Vector2 currentKey, Vector2 direction)
+    public int EmptyFloorAmountInDirection(Vector2 currentKey, Vector2 direction)
     {
         int movableGridAmount = 0;
-        float loopAmount = 0;
 
-        if (direction.x > 0)
-            loopAmount = _gridSize.x - currentKey.x;
-        else if (direction.x < 0)
-            loopAmount = currentKey.x + 1;
-        else if (direction.y > 0)
-            loopAmount = _gridSize.y - currentKey.y;
-        else if (direction.y < 0)
-            loopAmount = currentKey.y + 1;
-
-        for (int i = 1; i < loopAmount; i++)
+        for (int i = 1; i < GridUnitAmountInDirection(currentKey, direction); i++)
         {
             Vector2 nextKey = currentKey + direction * i;
             if (_gridUnits[nextKey].gridStatus == GridUnit.GridStatus.Wall)
@@ -65,12 +55,24 @@ public class GridManager : MonoBehaviour
         return movableGridAmount;
     }
 
+    private float GridUnitAmountInDirection(Vector2 currentKey, Vector2 direction)
+    {
+        if (direction.x > 0)
+            return _gridSize.x - currentKey.x;
+        else if (direction.x < 0)
+            return currentKey.x + 1;
+        else if (direction.y > 0)
+            return _gridSize.y - currentKey.y;
+        else if (direction.y < 0)
+            return currentKey.y + 1;
+        return 0;
+    }
+
     public void PaintGridUnit(Vector2 key)
     {
         if (_gridUnits[key].gridStatus != GridUnit.GridStatus.FloorColored)
         {
-            _level.paintedGridAmount++;
-            _level.CheckLevelProgress();
+            _level.UpdateLevelProgress();
             _gridUnits[key].Colorize();
         }
     }

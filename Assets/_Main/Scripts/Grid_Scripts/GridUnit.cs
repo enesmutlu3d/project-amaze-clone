@@ -29,10 +29,10 @@ public class GridUnit : MonoBehaviour
         Material[] materials = _meshRenderer.sharedMaterials;
         materials[1] = _level.floorPaintedMaterial;
         _meshRenderer.sharedMaterials = materials;
-        PlayParticle();
+        PlayPaintParticle();
     }
 
-    private void PlayParticle()
+    private void PlayPaintParticle()
     {
         ParticleSystem paintEffect = PoolManager.Instance.SpawnFloorPaintParticle(_paintEffectParent);
         ParticleSystem.MainModule settings = paintEffect.main;

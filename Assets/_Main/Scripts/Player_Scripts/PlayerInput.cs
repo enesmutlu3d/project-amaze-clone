@@ -40,9 +40,9 @@ public class PlayerInput : MonoBehaviour
             if (mousePosDelta.magnitude > _swipeThreshold)
             {
                 Vector2 direction = CheckInputDirection(mousePosDelta);
-                int moveAmount = _gridManager.CheckMove((Vector2)transform.position - (Vector2)_unitParent.position, direction);
-                if (moveAmount > 0)
-                    playerMovement.MovePlayer(direction, moveAmount);
+                int emptyFloorAmount = _gridManager.EmptyFloorAmountInDirection((Vector2)transform.position - (Vector2)_unitParent.position, direction);
+                if (emptyFloorAmount > 0)
+                    playerMovement.MovePlayer(direction, emptyFloorAmount);
                 else
                     ResetSwipeThreshold();
             }

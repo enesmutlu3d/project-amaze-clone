@@ -9,16 +9,17 @@ public class Level : MonoBehaviour
     public Material ballMaterial, floorPaintedMaterial;
     public Color floorPaintEffectColor;
     [HideInInspector] public int floorGridAmount;
-    [HideInInspector] public int paintedGridAmount;
 
+    private int _paintedGridAmount;
     private float _levelProgress;
 
-    public void CheckLevelProgress()
+    public void UpdateLevelProgress()
     {
-        _levelProgress = (float)paintedGridAmount / (float)floorGridAmount;
+        _paintedGridAmount++;
+        _levelProgress = _paintedGridAmount / floorGridAmount;
         CanvasManager.Instance.UpdateProgressBar(_levelProgress);
 
-        if (paintedGridAmount == floorGridAmount)
+        if (_paintedGridAmount == floorGridAmount)
             DOVirtual.DelayedCall(0.2f, () => LevelManager.Instance.LevelCompleted());
     }
 }

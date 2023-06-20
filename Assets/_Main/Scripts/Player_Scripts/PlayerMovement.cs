@@ -20,7 +20,7 @@ public class PlayerMovement : MonoBehaviour
 
     public void MovePlayer(Vector3 direction, int distance)
     {
-        _playerVisual.OnMovement(direction, distance);
+        _playerVisual.MovementAnimation(direction, distance);
         _playerInput.isMovable = false;
         _playerLastKey = Vector2Int.RoundToInt((Vector2)transform.position - (Vector2)_unitParent.position);
         _gridManager.PaintGridUnit(_playerLastKey);

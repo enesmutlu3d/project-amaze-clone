@@ -19,13 +19,11 @@ public class LevelAnimations : MonoBehaviour
     {
         if (oldLevel != null)
         {
-            oldLevel.transform.DOMove(Vector2.right * -15f, 0.75f);
+            oldLevel.transform.DOMove(Vector2.right * -30f, 0.75f);
             _camera.DOOrthoSize(_camTransitionFarSize, 0.35f).SetLoops(2, LoopType.Yoyo);
         }
 
-        newLevel.transform.DOMove(Vector2.zero, 0.8f);
-
-        DOVirtual.DelayedCall(0.81f, () => { Destroy(oldLevel); LevelManager.Instance.StartNewLevel();});
+        newLevel.transform.DOMove(Vector2.zero, 0.75f);
     }
 
     public void PlayLevelCompleteParticle() => _levelCompleteParticle.Play();

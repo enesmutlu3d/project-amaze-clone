@@ -16,9 +16,10 @@ public class PlayerVisual : MonoBehaviour
         _meshRenderer.material = _level.ballMaterial;
     }
 
-    public void OnMovement(Vector3 direction, int distance)
+    public void MovementAnimation(Vector3 direction, int distance)
     {
-        if (direction.x > 0 || direction.x < 0)
+        bool isHorizontal = direction.x > 0 || direction.x < 0;
+        if (isHorizontal)
         {
             _playerMesh.DOScaleX(1.2f, distance * 0.05f).SetEase(Ease.InQuad).OnComplete(() =>
                 _playerMesh.DOScaleX(0.35f, 0.1f).SetEase(Ease.InQuad).OnComplete(() => 

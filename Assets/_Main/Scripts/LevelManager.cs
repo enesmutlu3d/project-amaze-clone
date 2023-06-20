@@ -9,8 +9,8 @@ public class LevelManager : MonoBehaviour
     [SerializeField] private int _maxLevelIndex;
     public static event Action LevelComlete;
     public static event Action LevelStart;
-    private LevelAnimations _levelAnimations;
 
+    private LevelAnimations _levelAnimations;
     private GameObject _loadedLevel;
 
     private void Awake()
@@ -27,8 +27,9 @@ public class LevelManager : MonoBehaviour
         PlayerPrefs.SetInt("LevelProgress", level + 1);
         if (level == _maxLevelIndex)
             PlayerPrefs.SetInt("LevelProgress", 1);
-        StartAsyncLoading();
+        _levelAnimations.PlayLevelCompleteParticle();
         LevelComlete?.Invoke();
+        StartAsyncLoading();
     }
 
     private void StartAsyncLoading()
@@ -44,18 +45,21 @@ public class LevelManager : MonoBehaviour
 
         GameObject oldLevel = null;
         if (_loadedLevel != null)
-        {
             oldLevel = _loadedLevel;
-            _levelAnimations.PlayLevelCompleteParticle();
-        }
-        _loadedLevel = (GameObject)Instantiate(resourceRequest.asset, Vector3.right * 15f, Quaternion.identity);
-        DOVirtual.DelayedCall(0.7f, () => _levelAnimations.LevelLoadAnimation(_loadedLevel, oldLevel));
+        _loadedLevel = (GameObject)Instantiate(resourceRequest.asset, Vector3.right * 30f, Quaternion.identity);
+        _levelAnimations.LevelLoadAnimation(_loadedLevel, oldLevel);
+        
+        DOVirtual.DelayedCall(0.8f, () =>
+        {
+            Destroy(oldLevel);
+            StartNewLevel();
+        });
     }
 
-    public void StartNewLevel()
+    private void StartNewLevel()
     {
-        LevelStart?.Invoke();
         UnloadResources();
+        LevelStart?.Invoke();
     }
 
     private void CheckFirstLevel()

@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
+using Unity.VisualScripting;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -18,15 +19,22 @@ public class PlayerMovement : MonoBehaviour
         _playerVisual = GetComponent<PlayerVisual>();
     }
 
-    public void MovePlayer(Vector3 direction, int distance)
+    public void MovePlayer(Vector3 direction)
     {
+        int distance = _gridManager.EmptyFloorAmountInDirection((Vector2)transform.position - (Vector2)_unitParent.position, direction);
+        if (distance == 0)
+        {
+            _playerInput.ResetSwipeThreshold();
+            return;
+        }
+
         _playerVisual.MovementAnimation(direction, distance);
         _playerInput.isMovable = false;
         _playerLastKey = Vector2Int.RoundToInt((Vector2)transform.position - (Vector2)_unitParent.position);
         _gridManager.PaintGridUnit(_playerLastKey);
         transform.DOMove(transform.position + direction * distance, distance * 0.05f).SetEase(Ease.InQuad)
-            .OnUpdate(PaintGrid)
-            .OnComplete(SetMovable);
+        .OnUpdate(PaintGrid)
+        .OnComplete(SetMovable);
     }
 
     private void PaintGrid()

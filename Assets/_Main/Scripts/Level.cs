@@ -16,7 +16,7 @@ public class Level : MonoBehaviour
     public void UpdateLevelProgress()
     {
         _paintedGridAmount++;
-        _levelProgress = _paintedGridAmount / floorGridAmount;
+        _levelProgress = (float)_paintedGridAmount / (float)floorGridAmount;
         CanvasManager.Instance.UpdateProgressBar(_levelProgress);
 
         if (_paintedGridAmount == floorGridAmount)
